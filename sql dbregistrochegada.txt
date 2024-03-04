@@ -1,0 +1,67 @@
+CREATE TABLE tbProductionUnits (
+    id int(11) NOT NULL auto_increment primary key,
+    productionUnit varchar(140) COLLATE utf8_unicode_ci NOT NULL,
+    timestamp datetime DEFAULT current_timestamp()
+)ENGINE=InnoDB;
+
+CREATE TABLE tbBussinesPartners (
+    id int(11) NOT NULL auto_increment primary key,
+    bussinesPartner varchar(140) COLLATE utf8_unicode_ci NOT NULL,
+    cnpjCpf varchar(140) COLLATE utf8_unicode_ci NOT NULL,
+    codeSiagri int(11) not null,
+    timestamp datetime DEFAULT current_timestamp()
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE tbDocumentTypes (
+    id int(11) NOT NULL auto_increment primary key,
+    documentType varchar(140) COLLATE utf8_unicode_ci NOT NULL,
+    documentModel varchar(140) COLLATE utf8_unicode_ci NOT NULL,
+    timestamp datetime DEFAULT current_timestamp()
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE tbUsers (
+    id int(11) NOT NULL auto_increment primary key,
+    name varchar(140) COLLATE utf8_unicode_ci NOT NULL,
+    email varchar(150) COLLATE utf8_unicode_ci NOT NULL,
+    password varchar(32) COLLATE utf8_unicode_ci NOT NULL,
+    timestamp datetime DEFAULT current_timestamp()
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
+CREATE TABLE tbProductionUnitForUser (
+    id int(11) NOT NULL auto_increment primary key,
+    userForUnitId int(11) not null,
+    FOREIGN KEY fk_userForUnitId(userForUnitId) REFERENCES tbusers(id),
+    productionUnitForUserId int(11) not null,
+    FOREIGN KEY fk_productionUnitForUserId(productionUnitForUserId) REFERENCES tbproductionunits(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT,
+    timestamp datetime DEFAULT current_timestamp()
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE tbPermissions (
+    id int(11) NOT NULL auto_increment primary key,
+    UserId int(11) not null,
+    FOREIGN KEY fk_PuserId(UserId) REFERENCES tbusers(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT,
+    timestamp datetime DEFAULT current_timestamp()
+)ENGINE=INNODB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+CREATE TABLE tbRegistrations (
+    id int(11) NOT NULL auto_increment primary key,
+    invoiceKey varchar(55) COLLATE utf8_unicode_ci NOT NULL,
+    emissionDate datetime not null,
+    observation varchar(300) COLLATE utf8_unicode_ci NOT NULL,
+    bussinesPartnerId int(11) not null,
+    FOREIGN KEY fk_bussinesPartnerId(bussinesPartnerId) REFERENCES tbbussinesPartners(id),
+    productionUnitId int(11) not null,
+    FOREIGN KEY fk_productionUnitId(productionUnitId) REFERENCES tbproductionUnits(id),
+    userId int(11) not null,
+    FOREIGN KEY fk_RuserId(userId) REFERENCES tbusers(id),
+    documenttypeId int(11) not null,
+    FOREIGN KEY fk_documenttypeId(documenttypeId) REFERENCES tbdocumenttypes(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT,
+    timestamp datetime DEFAULT current_timestamp()
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

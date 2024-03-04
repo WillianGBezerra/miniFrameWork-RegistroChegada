@@ -1,0 +1,94 @@
+		<div class="col-md-9">
+			<div class="row mb-2">
+				<div class="col tweetBox">		
+					<form method="post" action="/invoice">
+						<div class="form-row align-items-center">
+							<input type="hidden" name="userId">
+							<div class="form-group col-md-1">
+							<label for="inputdocTipyId	">Tipo</label>
+							<select name="documenttypeId" id="inputdocTipyId" class="form-control" required placeholder="Selecione">
+								<option value="" selected>Selecione</option>
+								<?php foreach($this->view->DocumentTypes as $id_DocumentType => $DocumentType) { ?>
+									<option value="<?=$DocumentType['id']?>"> <?=$DocumentType['documentType']?> </option>
+								<?php } ?> -->
+							</select>
+							</div>
+							<div class="form-group col-md-auto">
+							<label for="inputInv">Nº Doc</label>
+							<input type="text" class="form-control" name="invoice" id="inputInv" placeholder="Número" required>
+							</div>
+							<div class="form-group col-md-3">
+							<label for="inputInvK">Chave</label>
+							<input type="text" class="form-control" name="invoiceKey" id="inputInvK" placeholder="Chave de acesso" required>
+							</div>
+							<div class="form-group col-md-3">
+							<label for="inputProdUnId">Fazenda</label>
+							<select name="productionUnitId" id="inputProdUnId" class="form-control" required placeholder="Selecione">
+								<option value="" selected>Selecione</option>
+								<?php foreach($this->view->prodUnits as $id_prodUnit => $prodUnit) { ?>
+									<option value="<?=$prodUnit['id']?>"> <?=$prodUnit['productionUnit']?> </option>
+								<?php } ?> -->
+							</select>
+							</div>
+							<div class="form-group col-md-auto">
+							<label for="inputDate">Emissão</label>
+							<input type="date" class="form-control" name="emissionDate" id="inputDate" placeholder="Emissão" required>
+							</div>
+						</div>
+						<div class="form-group row">
+							<textarea class="form-control" name="observation" id="inputObs" rows="6" required></textarea>
+							<div class="col mt-3 mb-0 d-flex justify-content-end">
+								<button type="submit" class="btn bg-success">Enviar</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="row tweet">
+				<div class="col p-0">
+			<table class="table table-sm table-responsive-sm table-condensed text-center table-borderless table-hover">
+			
+					<thead class="thead-dark">
+						<tr class="border-top">
+						<th scope="col">#</th>
+						<th scope="col">Nº Doc</th>
+						<th scope="col">Chave</th>
+						<th scope="col">Emissão</th>
+						<th scope="col">Unidade</th>
+						<th scope="col">Usuario</th>
+						<th scope="col">Observação</th>
+						<th scope="col">Status</th>
+						</tr>
+					</thead>
+					<tbody class="table-striped">
+						<?php foreach($this->view->invoices as $id_invoice => $invoice) { ?>
+							
+									<!-- <p><strong> <?=$invoice['name']?></strong> <small><span class="text text-muted">- <?=$invoice['emissao']?></span></small></p>
+									<p><?=$invoice['invoiceKey']?></p>
+									<br /> -->
+											<tr>
+											<th scope="row"><?=$invoice['idInvoice']?></th>
+											<td><?=$invoice['invoice']?></td>
+											<td><?=$invoice['invoiceKey']?></td>
+											<td><?=$invoice['emissao']?></td>
+											<td><?=$invoice['fazenda']?></td>
+											<td><?=$invoice['name']?></td>
+											<td><?=$invoice['observation']?></td>
+											<td><?=$invoice['status']?></td>
+											</tr>
+										
+								<!-- <?php if($invoice['userId'] == $_SESSION['id']) { ?>
+									<form method="post" action="/deletartweet">
+										<div class="col d-flex justify-content-end">
+											<input type="text" name="id" value="<?=$invoice['id']?>" >
+											<button type="submit" class="btn btn-danger"><small>Remover</small></button>
+										</div>
+									</form>
+							<?php } ?> -->
+					
+						<?php } ?>
+				</tbody>
+			</table>
+			</div>
+			</div>	
+		</div>
